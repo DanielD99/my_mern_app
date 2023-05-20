@@ -1,4 +1,3 @@
-// Projects
 
 interface Project{
 id: string;
@@ -8,12 +7,6 @@ description: string;
 status: string;
 }
 
-interface Client{
-id: string;
-name: string;
-email: string;
-phone: string;
-}
 type Projects = {
   id: string;
   clientId: string;
@@ -21,6 +14,15 @@ type Projects = {
   description: string;
   status: string;
 };
+
+
+interface Client{
+id: string;
+name: string;
+email: string;
+phone: string;
+}
+
 
 type Clients = {
   id: string;

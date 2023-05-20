@@ -1,5 +1,4 @@
 "use strict";
-// Projects
 const projects = [
     {
         id: '1',
