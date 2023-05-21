@@ -167,3 +167,4 @@ exports.schema = new GraphQLSchema({
     query: RootQuery,
     mutation
 });
+//# sourceMappingURL=schema.js.map
