@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.schema = void 0;
-//import { GraphQLSchema, } from "graphql";
-const { projects, clients, Project, Client } = require('../sampleData.ts');
+const { projects, clients, } = require('../sampleData.ts');
+// Mongoose models
+const Project = require('../models/Project.ts');
+const Client = require('../models/Client.ts');
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList } = require('graphql');
 // Client type
 const ClientType = new GraphQLObjectType({
@@ -25,7 +27,7 @@ const ProjectType = new GraphQLObjectType({
         client: {
             type: ClientType,
             resolve(parent, args) {
-                return clients.find((client) => client.id === parent.clientId);
+                return Client.findById(parent.clientId);
             }
         }
     })
@@ -36,7 +38,7 @@ const RootQuery = new GraphQLObjectType({
         projects: {
             type: new GraphQLList(ProjectType),
             resolve(parent, args) {
-                return projects;
+                return Project.find();
             },
         },
         project: {
@@ -44,13 +46,13 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
                 // code to get data from db / other source - sample data for now
-                return projects.find((project) => project.id === args.id);
+                return Project.findbyId(args.id);
             },
         },
         clients: {
             type: new GraphQLList(ClientType),
             resolve(parent, args) {
-                return clients;
+                Client.find();
             },
         },
         client: {
@@ -58,7 +60,7 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
                 // code to get data from db / other source - sample data for now
-                return clients.find((client) => client.id === args.id);
+                return Client.findbyId(args.id);
             },
         },
     },

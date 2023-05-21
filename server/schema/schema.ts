@@ -1,6 +1,13 @@
 
-//import { GraphQLSchema, } from "graphql";
-const { projects, clients, Project, Client } = require('../sampleData.ts');
+//const { projects, clients, } = require('../sampleData.ts');
+
+// Mongoose models
+ const Project = require('../models/Project.ts');
+ const Client = require('../models/Client.ts');
+
+
+
+
 const { GraphQLObjectType,
      GraphQLID,
       GraphQLString,
@@ -30,7 +37,7 @@ const ProjectType = new GraphQLObjectType({
     client: {
       type: ClientType,
       resolve(parent: any, args: any) {
-        return clients.find((client: any) => client.id === parent.clientId);
+        return Client.findById(parent.clientId);
       }
     }
   })
@@ -39,11 +46,10 @@ const ProjectType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
-
     projects: {
       type: new GraphQLList(ProjectType),
       resolve(parent: any, args: any) {
-          return projects;
+          return Project.find();
   },
 },
   project: {
@@ -51,14 +57,14 @@ const RootQuery = new GraphQLObjectType({
     args: { id: { type: GraphQLID } },
     resolve(parent: any, args: any) {
       // code to get data from db / other source - sample data for now
-      return projects.find((project: any) => project.id === args.id);
+      return Project.findbyId(args.id);
       
     },
   },
     clients: {
         type: new GraphQLList(ClientType),
         resolve(parent: any, args: any) {
-            return clients;
+           Client.find();
             
     },
 },
@@ -67,7 +73,7 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent: any, args: any) {
         // code to get data from db / other source - sample data for now
-        return clients.find((client: any) => client.id === args.id);
+        return Client.findbyId(args.id);
         
       },
     },

@@ -5,10 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const colors = require('colors');
-const dotenv_1 = require("dotenv");
 const express_graphql_1 = require("express-graphql");
 const schema_1 = require("./schema/schema");
-(0, dotenv_1.config)();
+require('dotenv').config();
 const connectDB = require('./config/db');
 const port = process.env.PORT || 5000;
 const app = (0, express_1.default)();
