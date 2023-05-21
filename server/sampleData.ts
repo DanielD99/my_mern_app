@@ -1,39 +1,4 @@
 
-interface Project{
-id: string;
-clientId: string;
-name: string;
-description: string;
-status: string;
-}
-
-type Projects = {
-  id: string;
-  clientId: string;
-  name: string;
-  description: string;
-  status: string;
-};
-
-
-interface Client{
-id: string;
-name: string;
-email: string;
-phone: string;
-}
-
-
-type Clients = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-};
-
-
-
-
 const projects = [
     {
       id: '1',
