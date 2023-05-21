@@ -12,7 +12,8 @@ const { GraphQLObjectType,
      GraphQLID,
       GraphQLString,
        GraphQLSchema,
-        GraphQLList
+        GraphQLList,
+        GraphQLNonNull
     } = require('graphql');
 
 // Client type
@@ -56,7 +57,7 @@ const RootQuery = new GraphQLObjectType({
     type: ProjectType,
     args: { id: { type: GraphQLID } },
     resolve(parent: any, args: any) {
-      // code to get data from db / other source - sample data for now
+    
       return Project.findbyId(args.id);
       
     },
@@ -64,7 +65,7 @@ const RootQuery = new GraphQLObjectType({
     clients: {
         type: new GraphQLList(ClientType),
         resolve(parent: any, args: any) {
-           Client.find();
+           return Client.find();
             
     },
 },
@@ -72,7 +73,7 @@ const RootQuery = new GraphQLObjectType({
       type: ClientType,
       args: { id: { type: GraphQLID } },
       resolve(parent: any, args: any) {
-        // code to get data from db / other source - sample data for now
+      
         return Client.findbyId(args.id);
         
       },
@@ -80,6 +81,41 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+//Mutations
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields:{
+    //add client
+    addClient:{
+      type: ClientType,
+      args:{
+        name: { type : GraphQLNonNull(GraphQLString) },
+        email: { type : GraphQLNonNull(GraphQLString) },
+        phone: { type : GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent:any, args:any){
+        const client = new Client({
+          name: args.name,
+          email: args.email,
+          phone: args.phone,
+        });
+        return client.save();
+      },
+    },
+    //delete client
+    deleteClient:{
+      type: ClientType,
+      args:{
+        id: { type : GraphQLNonNull(GraphQLID) },
+  },
+  resolve(parent:any, args:any) {
+    return Client.findByIdAndRemove(args.id);
+  },
+  },
+},
+});
+
 export const schema = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });
