@@ -5,7 +5,7 @@ exports.schema = void 0;
 // Mongoose models
 const Project = require('../models/Project.ts');
 const Client = require('../models/Client.ts');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull, GraphQLEnumType } = require('graphql');
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLSchema, GraphQLList, GraphQLNonNull } = require('graphql');
 // Client type
 const ClientType = new GraphQLObjectType({
     name: 'Client',
@@ -94,73 +94,6 @@ const mutation = new GraphQLObjectType({
                 return Client.findByIdAndRemove(args.id);
             },
         },
-        //add project
-        addProject: {
-            type: ProjectType,
-            args: {
-                name: { type: GraphQLNonNull(GraphQLString) },
-                description: { type: GraphQLNonNull(GraphQLString) },
-                status: {
-                    type: new GraphQLEnumType({
-                        name: 'ProjectStatus',
-                        values: {
-                            new: { value: 'Not Started' },
-                            progress: { value: 'In Progress' },
-                            completed: { value: 'Completed' },
-                        },
-                    }),
-                    defaultValue: 'Not Started',
-                },
-                clientId: { type: GraphQLNonNull(GraphQLID) },
-            },
-            resolve(parent, args) {
-                const project = new Project({
-                    name: args.name,
-                    description: args.description,
-                    status: args.status,
-                    clientId: args.clientId,
-                });
-                return project.save();
-            },
-        },
-        //delete project
-        deleteProject: {
-            type: ProjectType,
-            args: {
-                id: { type: GraphQLNonNull(GraphQLID) },
-            },
-            resolve(parent, args) {
-                return Project.findByIdAndRemove(args.id);
-            },
-        },
-        //update  project
-        updateProject: {
-            type: ProjectType,
-            args: {
-                id: { type: GraphQLNonNull(GraphQLID) },
-                name: { type: GraphQLString },
-                description: { type: GraphQLString },
-                status: {
-                    type: new GraphQLEnumType({
-                        name: 'ProjectStatusUpdate',
-                        values: {
-                            new: { value: 'Not Started' },
-                            progress: { value: 'In Progress' },
-                            completed: { value: 'Completed' },
-                        },
-                    }),
-                },
-            },
-            resolve(parent, args) {
-                return Project.findByIdAndUpdate(args.id, {
-                    $set: {
-                        name: args.name,
-                        description: args.description,
-                        status: args.status,
-                    },
-                }, { new: true });
-            }
-        }
     },
 });
 exports.schema = new GraphQLSchema({
