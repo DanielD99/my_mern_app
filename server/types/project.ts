@@ -17,3 +17,4 @@ interface Project{
       description: string;
       status: string;
     };
+    export type { Project, Projects};

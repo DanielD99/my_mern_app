@@ -18,6 +18,6 @@ const ProjectSchema = new mongoose_1.default.Schema({
     clientId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'Client',
-    }
+    },
 });
-module.exports = mongoose_1.default.model('Project', ProjectSchema);
+module.exports = mongoose_1.default.model('Projects', ProjectSchema);

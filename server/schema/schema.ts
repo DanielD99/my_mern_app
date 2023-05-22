@@ -58,7 +58,7 @@ const RootQuery = new GraphQLObjectType({
     args: { id: { type: GraphQLID } },
     resolve(parent: any, args: any) {
     
-      return Project.findbyId(args.id);
+      return Project.findById(args.id);
       
     },
   },
@@ -74,7 +74,7 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent: any, args: any) {
       
-        return Client.findbyId(args.id);
+        return Client.findById(args.id);
         
       },
     },
