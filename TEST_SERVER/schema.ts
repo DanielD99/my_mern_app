@@ -7,7 +7,6 @@
 
 
 
-
 const { GraphQLObjectType,
      GraphQLID,
       GraphQLString,
@@ -56,11 +55,13 @@ const RootQuery = new GraphQLObjectType({
   project: {
     type: ProjectType,
     args: { id: { type: GraphQLID } },
-    resolve(parent: any, args: any) {
-    
-      return Project.findById(args.id);
+    async resolve(parent: any, args: any) {
+      console.log("REACHED")
+      let project = await Project.findById(args.id)
+      return project
+
       
-    },
+    }, 
   },
     clients: {
         type: new GraphQLList(ClientType),
@@ -108,8 +109,13 @@ const mutation = new GraphQLObjectType({
       args:{
         id: { type : GraphQLNonNull(GraphQLID) },
   },
-  resolve(parent:any, args:any) {
-    return Client.findByIdAndRemove(args.id);
+  async resolve(parent:any, args:any) {
+    // check if user exists on any projects - if true then delete this relation and update the project - else simply delete the client
+    let projects = await Project.find({clientId: args.id})
+    if(!projects) {
+      
+   }
+   return await Client.findByIdAndRemove(args.id);
   },
   },
 },

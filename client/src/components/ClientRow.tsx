@@ -1,6 +1,6 @@
 import React from 'react'
 import {FaTrash} from 'react-icons/fa';
-import {Client} from '../../../server/types/client';
+import {Client} from '../../../TEST_SERVER/types/client';
 import { useMutation } from '@apollo/client';
 import { DELETE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
@@ -31,6 +31,7 @@ const [deleteClient] = useMutation(DELETE_CLIENT, {
         <td>{client.name}</td>
         <td>{client.email}</td>
         <td>{client.phone}</td>
+        <td>{client.id}</td>
         <td>
             <button className="btn btn-danger btn-sm"
              onClick={handleDeleteClient}>

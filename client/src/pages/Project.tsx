@@ -16,6 +16,7 @@ if (error){
     return <p>Error! {error.message}, :(</p>;
 } 
 
+console.log(data.project)
 
   return (
     <>
@@ -29,7 +30,7 @@ if (error){
             <p className="lead">{data.project.status}</p>
 
 
-            <ClientInfo client={data.project.client} />
+            {data.project.client && <ClientInfo client={data.project.client} />}
         </div>
 
   )}

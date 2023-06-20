@@ -17,11 +17,12 @@ export default function Clients() {
                      <th>Name</th>
                      <th>Email</th>
                      <th>Phone</th>
+                      <th>ID</th>
                      <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    {data.clients.map((client:any)=>(
+                    {data.getAllClients.map((client:any)=>(
                         <ClientRow key={client.id} client={client}/>
                     ))}
                 </tbody>

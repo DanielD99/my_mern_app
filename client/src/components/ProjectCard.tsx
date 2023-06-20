@@ -1,5 +1,6 @@
 
 export default function ProjectCard({project}:any) {
+    console.log(project)
   return (
     <div className='col-md-6'>
         <div className="card mb3">
