@@ -31,11 +31,28 @@ const resolvers = {
     },
   },
   Mutation: {
+    createProject: async (_parent: any, args: any, _context: any, _info: any) => {
+      const { name, description, status, clientIds } = args.project;
+      try {
+        const project = new Project({
+          name,
+          description,
+          status,
+          clients: clientIds,
+        });
+        // Save the project in the database
+        const createdProject = await project.save();
+        return createdProject;
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error creating project");
+      }
+    },
     createClient: async (parent: any, args: any, context: any, info: any) => {
-    //   const { title, description } = args.post;
-    //   const post = new Post({ title, description });
-    //   await post.save();
-    //   return post;
+      const { name, email, phone } = args.client;
+      const client = new Client({ name, email, phone });
+      await client.save();
+      return client;
     },
     deleteClient: async (parent: any, args: any, context: any, info: any) => {
         const id = args.id

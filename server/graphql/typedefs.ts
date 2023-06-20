@@ -24,12 +24,21 @@ const typeDefs = gql`
   }
 
   input ClientInput {
-    title: String
-    description: String
+    name: String
+    email: String
+    phone: String
   }
 
+  input ProjectInput {
+    name: String
+    description: String
+    status: String
+    clientIds: [ID]
+  }
+  
   type Mutation {
     createClient(client: ClientInput): Client
+    createProject(project: ProjectInput): Project
     deleteClient(id: ID): String
     deleteProject(id: ID): String
   }

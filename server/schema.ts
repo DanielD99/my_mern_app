@@ -120,8 +120,3 @@ const mutation = new GraphQLObjectType({
   },
 },
 });
-
-export const schema = new GraphQLSchema({
-  query: RootQuery,
-  mutation
-});

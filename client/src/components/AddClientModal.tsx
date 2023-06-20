@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import { useMutation } from '@apollo/client';
-import { ADD_CLIENT } from '../mutations/clientMutations';
+import { CREATE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
 
 export default function AddClientModal() {
@@ -9,14 +9,14 @@ export default function AddClientModal() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
 
-    const [addClient] = useMutation(ADD_CLIENT, {
+    const [addClient] = useMutation(CREATE_CLIENT, {
         variables: { name, email, phone },
-        update(cache, { data: { addClient } }) {
+        update(cache, { data: { createClient } }) {
             const{ clients } = cache.readQuery({query: GET_CLIENTS})as any;
 
             cache.writeQuery({
                 query: GET_CLIENTS,
-                data: { clients: [...clients, addClient] },
+                data: { clients: [...clients, createClient] },
             });
         }
     });
