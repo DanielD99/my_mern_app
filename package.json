@@ -25,7 +25,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node server/index.ts",
-    "dev": "nodemon TEST_SERVER/index.ts"
+    "dev": "nodemon server/index.ts"
   },
   "name": "my-mern-app",
   "version": "1.0.0",

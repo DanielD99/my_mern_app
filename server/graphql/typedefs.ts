@@ -13,12 +13,14 @@ const typeDefs = gql`
     name: String
     description: String
     status: String
+    clients: [Client]
   }
 
   type Query {
-    hello: String
     getAllClients: [Client]
     getAllProjects: [Project]
+    getClient(id: String!): Client
+    getProject(id: String!): Project
   }
 
   input ClientInput {

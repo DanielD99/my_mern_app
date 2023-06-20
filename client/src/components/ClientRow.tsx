@@ -1,6 +1,6 @@
 import React from 'react'
 import {FaTrash} from 'react-icons/fa';
-import {Client} from '../../../TEST_SERVER/types/client';
+import {Client} from '../../../server/types/client';
 import { useMutation } from '@apollo/client';
 import { DELETE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
