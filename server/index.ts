@@ -6,8 +6,8 @@ import dotenv from "dotenv";
 import cors from "cors"
 import { ApolloServer, gql } from "apollo-server-express";
 import mongoose from "mongoose";
-
 dotenv.config();
+
 
 const startServer = async () => {
     const app: Application = express();

@@ -11,9 +11,14 @@ const ClientSchema = new mongoose.Schema({
     phone:{
         type: String,
     },
+    experiences:[{
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'experience',
+    }]
 
 });
 
-const Client = mongoose.model('client', ClientSchema);
+const Client = mongoose.model('Client', ClientSchema);
 
 export default Client;

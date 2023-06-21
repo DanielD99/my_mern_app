@@ -10,14 +10,14 @@ const ProjectSchema = new mongoose.Schema({
     },
     status:{
         type: String,
-        enum:['Not Started', 'In Progres', 'Completed'],       
+        enum:['Not Started', 'In Progress', 'Completed'],       
     },
     clients:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'client',
+        ref: 'Client',
     }],
 
 });
-const Project = mongoose.model('project', ProjectSchema);
+const Project = mongoose.model('Project', ProjectSchema);
 
 export default Project;

@@ -6,6 +6,7 @@ const typeDefs = gql`
     name: String
     email: String
     phone: String
+    experiences: [Experience]
   }
 
   type Project {
@@ -16,11 +17,11 @@ const typeDefs = gql`
     clients: [Client]
   }
 
-  type Query {
-    getAllClients: [Client]
-    getAllProjects: [Project]
-    getClient(id: String!): Client
-    getProject(id: String!): Project
+  type Experience {
+    id: ID!
+    skillSet: String
+    description: String
+    level: String
   }
 
   input ClientInput {
@@ -33,10 +34,26 @@ const typeDefs = gql`
     name: String
     description: String
     status: String
-    clientIds: [ID]
+    clients: ClientInput
+
+  }
+
+  input ExperienceInput {
+    skillSet: String
+    description: String
+    level: String
+  }
+
+  
+  type Query {
+    getAllClients: [Client]
+    getAllProjects: [Project]
+    getClient(id: ID!): Client
+    getProject(id: ID!): Project
   }
   
   type Mutation {
+    addClientToProject(clientId: ID!, projectId: ID!): Project
     createClient(client: ClientInput): Client
     createProject(project: ProjectInput): Project
     deleteClient(id: ID): String

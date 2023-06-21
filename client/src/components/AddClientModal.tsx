@@ -1,35 +1,36 @@
 import { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery} from '@apollo/client';
 import { CREATE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function AddClientModal() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const {data, refetch} = useQuery(GET_CLIENTS);
+    const [createClient] = useMutation(CREATE_CLIENT);
 
-    const [addClient] = useMutation(CREATE_CLIENT, {
-        variables: { name, email, phone },
-        update(cache, { data: { createClient } }) {
-            const{ clients } = cache.readQuery({query: GET_CLIENTS})as any;
-
-            cache.writeQuery({
-                query: GET_CLIENTS,
-                data: { clients: [...clients, createClient] },
-            });
-        }
-    });
-
-
-const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if(name === "" || email === "" || phone === ""){
         return alert('Please fill in all fields');
         
     }
-    addClient({ variables: { name, email, phone } });
+     await createClient({
+        variables: {
+            client: { 
+                name,
+                 email,
+                  phone
+                },
+        },
+        refetchQueries: [{query: GET_CLIENTS}]
+    });
+    refetch();
+    toast.success('Client Added Successfully');
   };
 
 
