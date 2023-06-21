@@ -109,7 +109,10 @@ const resolvers = {
     deleteClient: async (parent: any, args: any, context: any, info: any) => {
         const id = args.id
         try {
-          await Client.findByIdAndDelete(id)
+           const clientId = await Client.findByIdAndDelete(id)
+           if (!clientId) {
+             throw new Error("Client not found!")
+           }
           return `Succesfully deleted client with id ${id}`;
         } catch (error) {
           return "Something went wrong!"

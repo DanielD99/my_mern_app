@@ -3,14 +3,15 @@ import { FaUser } from 'react-icons/fa';
 import { useMutation, useQuery} from '@apollo/client';
 import { CREATE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import { onError } from '@apollo/client/link/error';
 
 export default function AddClientModal() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const {data, refetch} = useQuery(GET_CLIENTS);
-    const [createClient] = useMutation(CREATE_CLIENT);
+    const { refetch } = useQuery(GET_CLIENTS);
+    const [ createClient ] = useMutation(CREATE_CLIENT);
 
 const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

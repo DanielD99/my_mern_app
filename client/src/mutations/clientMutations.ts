@@ -14,13 +14,9 @@ mutation CreateClient($client: ClientInput) {
 
 
 const DELETE_CLIENT = gql`
-mutation deleteClient($id: ID!){
-    deleteClient(id: $id){
-        id
-        name
-        email
-        phone
-    }
-}`;
+mutation DeleteClient($id: ID!) {
+  deleteClient(id: $id)
+}
+`;
 
 export { DELETE_CLIENT, CREATE_CLIENT };

@@ -14,7 +14,7 @@ const ClientSchema = new mongoose.Schema({
     experiences:[{
         type: mongoose.Schema.Types.ObjectId,
         required: false,
-        ref: 'experience',
+        ref: 'Experience',
     }]
 
 });

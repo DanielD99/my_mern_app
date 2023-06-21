@@ -14,6 +14,7 @@ const ProjectSchema = new mongoose.Schema({
     },
     clients:[{
         type: mongoose.Schema.Types.ObjectId,
+        required: false,
         ref: 'Client',
     }],
 

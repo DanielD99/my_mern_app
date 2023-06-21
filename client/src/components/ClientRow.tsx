@@ -1,29 +1,38 @@
 import React from 'react'
 import {FaTrash} from 'react-icons/fa';
 import {Client} from '../../../server/types/client';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { DELETE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
+import toast from 'react-hot-toast';
 
 interface ClientRowProps {
     client: Client;
   }
 
-export default function ClientRow({ client }: ClientRowProps) {
-const [deleteClient] = useMutation(DELETE_CLIENT, {
-    variables: {id: client.id},
-    update(cache, { data: { deleteClient } }) {
-        const{ clients } = cache.readQuery({query: GET_CLIENTS})as any;
+  export default function ClientRow({ client }: ClientRowProps) {
+    const {refetch} = useQuery(GET_CLIENTS);
+    const [deleteClient] = useMutation(DELETE_CLIENT, {
+      update(cache, { data }) {
+        const { clients } = cache.readQuery({ query: GET_CLIENTS }) as any;
         cache.writeQuery({
-            query: GET_CLIENTS,
-            data: {clients: clients.filter((c:Client)=> c.id !== deleteClient.id)}
+          query: GET_CLIENTS,
+          data: { clients: clients.filter((c: Client) => c.id !== client.id) },
         });
-    }
-       
-});
+      }
+    });
 
-    const handleDeleteClient = () =>{
-        deleteClient();
+    const handleDeleteClient = async () =>{
+        try {
+         await deleteClient({
+            variables: {id: client.id},
+            refetchQueries: [{query: GET_CLIENTS}],
+         });
+        } catch (error) {
+            console.log(error);
+        }
+        toast.success('Client Added Successfully');
+        refetch();
     }
 
   return (
