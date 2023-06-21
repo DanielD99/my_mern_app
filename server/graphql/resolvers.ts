@@ -121,9 +121,20 @@ const resolvers = {
 
     deleteProject: async (_parent: any, args: any, _context: any, _info: any) => {
       const id = args.id;
-      await Project.findByIdAndDelete(id);
-      return `Ok - post with id ${id} was successfully deleted`;
-    },
+      const projectId = await Project.findById(id);
+      try{ 
+        if (!projectId) {
+          throw new Error("Project was not found!")
+        }
+        if (projectId.clients.length > 0){
+           throw new Error("Project still has clients! - can not delete")
+        }
+        await Project.findByIdAndDelete(id)
+      return `Ok - Project with id ${id} was successfully deleted`;
+    }catch (error) {
+      return "Something went wrong!!!"
+    }
+  },
   },
 };
 
