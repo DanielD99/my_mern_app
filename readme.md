@@ -2,7 +2,7 @@
 My Mern App
 
 ## Description
-This application allows you to keep track of your projects 
+This application allows you to keep track of and modify your projects and Clients
 
 ## Technologies Used
 - MongoDB
@@ -25,9 +25,9 @@ This application allows you to keep track of your projects
 ## Usage
 1. Start the server: `npm run dev`
 2. Start the client: `npm start`
-3. Access the application in your browser at `http://localhost:3000`.
+3. Access the application in your browser at `http://localhost:3006`.
 
 ## Folder Structure
 - `server/`: Contains the server-side code.
 - `client/`: Contains the client-side code.
-- `shared/`: Contains shared code or utilities that can be used by both the server and client.
+-  Root Contains shared code or utilities that can be used by both the server and client.

@@ -31,7 +31,7 @@ interface ClientRowProps {
         } catch (error) {
             console.log(error);
         }
-        toast.success('Client Added Successfully');
+        toast.success('Client deleted Successfully');
         refetch();
     }
 

@@ -28,7 +28,7 @@ const resolvers = {
     getProject: async (_parent: any, args: { id: string }, _context: any, _info: any) => {
       const { id } = args;
       try {
-        const project = await Project.findById(id);
+        const project = await Project.findById(id).populate("clients");
         return project;
       } catch (error) {
         console.error(error);
@@ -38,7 +38,7 @@ const resolvers = {
 
     getAllProjects: async (_parent: any, args: any, _context: any, _info: any) => {
       try{
-      return await Project.find({});
+      return await Project.find({}).populate("clients");
       } catch (error) {
         console.error(error);
         throw new Error("Error retrieving all projects");
@@ -54,7 +54,7 @@ const resolvers = {
           name,
           description,
           status,
-          //clients: clientIds,
+          clients: clientIds,
         });
         return {id:newProject._id, name, description, status, clients: clientIds};
       } catch (error) {
@@ -85,7 +85,6 @@ const resolvers = {
         if (!project) {
           throw new Error("Project not found!");
         }
-
       //check if client already exists in project
       const clientExists = project.clients.find((client: any) => client == clientId);
       if (clientExists) {
