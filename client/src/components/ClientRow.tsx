@@ -13,7 +13,7 @@ interface ClientRowProps {
   export default function ClientRow({ client }: ClientRowProps) {
     const {refetch} = useQuery(GET_CLIENTS);
     const [deleteClient] = useMutation(DELETE_CLIENT, {
-      update(cache, { data }) {
+      update(cache) {
         const { clients } = cache.readQuery({ query: GET_CLIENTS }) as any;
         cache.writeQuery({
           query: GET_CLIENTS,

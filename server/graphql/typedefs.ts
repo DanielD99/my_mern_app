@@ -34,8 +34,6 @@ const typeDefs = gql`
     name: String
     description: String
     status: String
-    clients: ClientInput
-
   }
 
   input ExperienceInput {

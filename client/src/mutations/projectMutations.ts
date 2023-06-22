@@ -9,7 +9,8 @@ mutation CreateProject($project: ProjectInput) {
     description
     status
     }
-  }`;
+  }
+  `;
 
 
 const DELETE_PROJECT = gql`

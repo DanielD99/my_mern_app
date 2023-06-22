@@ -54,7 +54,7 @@ const resolvers = {
           name,
           description,
           status,
-          clients: clientIds,
+          //clients: clientIds,
         });
         return {id:newProject._id, name, description, status, clients: clientIds};
       } catch (error) {

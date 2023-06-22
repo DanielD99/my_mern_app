@@ -2,27 +2,38 @@ import { useState } from 'react';
 import { FaList } from 'react-icons/fa';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_PROJECTS } from '../queries/projectQueries';
+import { CREATE_PROJECT } from '../mutations/projectMutations';
+import toast from 'react-hot-toast';
 
 export default function AddProjectModal() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [clientId, setClientId] = useState('');
-    const [status, setStatus] = useState('new');
+    const [status, setStatus] = useState('Not Started');
+    const { refetch } = useQuery(GET_PROJECTS);
+    const [ createProject ] = useMutation(CREATE_PROJECT);
 
 
-
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (name === "" || description === "" || status === "") {
             return alert('Please fill in all fields');
 
         }
-        setName('');
-        setDescription('');
-        setStatus('new');
-        setClientId('');
-    };
+        await createProject({
+            variables: {
+                project: { 
+                    name,
+                    description,
+                    status,
+                    },
+            },
+            refetchQueries: [{query: GET_PROJECTS}]
+        });
+        refetch();
+        toast.success('Project Added Successfully');
+      };
+    
 
 
 
@@ -59,9 +70,9 @@ export default function AddProjectModal() {
                                     <label className="form-label">Status</label>
                                     <select id="status" className="form-select" value={status} onChange={(e) => setStatus(e.target.value)}>
 
-                                        <option value="new">Not Started</option>
-                                        <option value="progress">In Progress</option>
-                                        <option value="completed">Completed</option>
+                                        <option value="Not Started">Not Started</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Completed">Completed</option>
                                     </select>
                                 </div>
                                 <button type="submit" data-bs-dismiss="modal" className="btn btn-secondary">Submit</button>
